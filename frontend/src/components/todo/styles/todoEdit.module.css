@@ -1,0 +1,50 @@
+.wrapper{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    
+}
+
+.editForm{
+    position: relative;
+    background-color: white;
+    width: 400px;
+    height: 60px;
+    padding: 70px 20px;
+    margin-top: 50px;
+    border-radius: 10px;
+}
+.editInput{
+    width: 300px;
+    height: 30px;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.editButton{
+    background-color: deepskyblue;
+    color: white;
+    font-weight: 500;
+    border: none;
+    padding: 6px 10px;
+    cursor: pointer;
+}
+
+.close{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 22px;
+    background-color: crimson;
+    color: white;
+    padding: 2px;
+    font-weight: bold;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}

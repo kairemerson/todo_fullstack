@@ -5,6 +5,6 @@ export const api = axios.create({
 })
 
 export const getList = async()=>{
-    const todos = await api.get("/todos")
+    const todos = await api.get("/api/todos")
     return todos
 }

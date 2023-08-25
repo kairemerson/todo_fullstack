@@ -14,7 +14,7 @@ export class UserController{
             }
         })
         if(!user){
-            return response.status(500).json({error:user})
+            return response.status(500).json({error: user})
         }else if(user && bcrypt.compareSync(password, user.password)){
             const AUTHSECRET = process.env.AUTHSECRET || ""
         

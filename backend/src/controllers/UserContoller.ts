@@ -36,7 +36,7 @@ export class UserController{
         })
     }
 
-    async signup(request: Request, require: Response){
+    async signup(request: Request, response: Response){
         const name: string = request.body.name || ""
         const email: string = request.body.email || ""
         const password: string = request.body.password || ""
@@ -62,6 +62,7 @@ export class UserController{
                     password: passwordHash
                 }
             })
+            return response.status(200).send({success: "usuário cadastrado com sucesso"})
         }
     }
 }

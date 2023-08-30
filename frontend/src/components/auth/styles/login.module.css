@@ -16,14 +16,15 @@
 
 .title{
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .input_login{
     margin-bottom: 14px;
-    height: 26px;
+    height: 30px;
     border: 1px solid #eee;
     padding-left: 5px;
+    border-radius: 5px;
 }
 .input_login::placeholder{
     color: #ccc;

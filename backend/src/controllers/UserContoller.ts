@@ -14,7 +14,7 @@ export class UserController{
             }
         })
         if(!user){
-            return response.status(500).json({error: user})
+            return response.status(500).json({error: "Usuário não encontrado"})
         }else if(user && bcrypt.compareSync(password, user.password)){
             const AUTHSECRET = process.env.AUTHSECRET || ""
         
@@ -22,7 +22,7 @@ export class UserController{
                 expiresIn: "1 day"
             })
             const {name, email} = user
-            response.json({name, email, token})
+            response.status(200).json({success: "Login efetuado com sucesso.",name, email, token})
         }
         else{
             return response.status(400).send({error: "Usuário/senha inválidos"})
@@ -45,7 +45,7 @@ export class UserController{
         const salt = bcrypt.genSaltSync()
         const passwordHash = bcrypt.hashSync(password, salt)
         if(!bcrypt.compareSync(confirmPassword, passwordHash)){
-            return response.status(400).send({error: "senhas não conferem"})
+            return response.status(400).send({error: "Senhas não conferem"})
         }
         const user = await prismaClient.user.findUnique({
             where:{
@@ -62,7 +62,7 @@ export class UserController{
                     password: passwordHash
                 }
             })
-            return response.status(200).send({success: "usuário cadastrado com sucesso"})
+            return response.status(200).send({success: "Usuário cadastrado com sucesso"})
         }
     }
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import 'react-toastify/dist/ReactToastify.css';
 import { api, getList } from "../../services/api"
 import { TodoList } from "./TodoList"
 import { TodoEdit } from "./TodoEdit"
@@ -14,10 +15,10 @@ export const Home = ()=>{
     const [todoList, setTodoList] = useState<todoT[]>([])
 
     useEffect(()=>{
-        const list = async ()=>{
-            const todos = await getList()
-            setTodoList(todos.data)
-        }
+        // const list = async ()=>{
+        //     const todos = await getList()
+        //     setTodoList(todos.data)
+        // }
         list()
     },[])
     
@@ -57,7 +58,6 @@ export const Home = ()=>{
             {todoList && (<TodoList deleteTodo={deleteTodo} editTodo={editTodo} list={todoList} />)}
             
             {open && (<TodoEdit todo={todoToEdit} changeOpen={changeOpen} list={list}/>)}
-            
         </div>
     )
 }

@@ -1,6 +1,10 @@
 import styles from "./styles/login.module.css"
 import { ChangeEvent, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
+import * as yup from "yup"
+import 'react-toastify/dist/ReactToastify.css';
+import { api } from "../../services/api"
 
  export const Login = ()=>{
 
@@ -8,9 +12,24 @@ import { useNavigate } from "react-router-dom"
     const[password, setPassword] = useState("")
     const navigate = useNavigate()
 
-    const handleSubmit = ()=>{
-        console.log("login", email,password);
-        navigate("/home")
+    const loginSchema = yup.object().shape({
+        email: yup.string().email("email inválido").required("email é obrigatório"),
+        password: yup.string().required().min(6,"A senha deve ter mais de 6 dígitos")
+    })
+
+    const handleSubmit = async ()=>{
+        
+        await api.post("/oapi/login", {email, password})
+            .then((data)=>{
+                toast.success(data.data.success)
+                setEmail("")
+                setPassword("")
+                navigate("/home")
+
+            }).catch((err)=>{
+                toast.error(err.response.data.error)
+            })
+            
     }
     return(
         <div className={styles.wrapper}>

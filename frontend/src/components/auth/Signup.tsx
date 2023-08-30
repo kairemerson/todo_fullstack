@@ -1,6 +1,9 @@
 import styles from "./styles/login.module.css"
 import { ChangeEvent, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
+import {api} from "../../services/api"
 
 export const Signup = ()=> {
     const [name, setName] = useState('')
@@ -8,9 +11,22 @@ export const Signup = ()=> {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const navigate = useNavigate()
-    const handleSignup = ()=>{
-        console.log("signup", name,email, password, confirmPassword)
-        navigate("/")
+    const handleSignup = async ()=>{
+        await api.post("/oapi/signup",{name, email, password, confirmPassword})
+        .then((data)=>{
+            toast.success(data.data.success)
+            console.log(data.data);
+            setName("")
+            setEmail("")
+            setPassword("")
+            setConfirmPassword("")
+            navigate("/")
+            
+        })
+        .catch((err)=>{
+            console.log(err.response.data);
+            toast.error(err.response.data.error)
+        })
     }
 
     return(

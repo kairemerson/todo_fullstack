@@ -18,18 +18,27 @@
     text-align: center;
     margin-bottom: 30px;
 }
-
+.label{
+    margin-top: 14px;
+}
 .input_login{
-    margin-bottom: 14px;
     height: 30px;
     border: 1px solid #eee;
     padding-left: 5px;
     border-radius: 5px;
+    outline: none;
+}
+input.input_error,
+select.input_error{
+    border: 2px solid #fc8181;
 }
 .input_login::placeholder{
     color: #ccc;
 }
-
+.error{
+    font-size: 10pt;
+    color: #fc8181;
+}
 .btn_submit{
     margin: 10px 0;
     background-color: deepskyblue;
@@ -43,6 +52,7 @@
 .create_acc{
     color: deepskyblue;
     font-weight: 600;
+    font-size: 14pt;
     cursor: pointer;
 
 }

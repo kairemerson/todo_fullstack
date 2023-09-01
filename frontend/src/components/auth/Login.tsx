@@ -6,6 +6,8 @@ import { useFormik} from "formik"
 import 'react-toastify/dist/ReactToastify.css';
 import { api } from "../../services/api"
 
+export const userKey = "userKey"
+
  export const Login = ()=>{
 
     const navigate = useNavigate()
@@ -14,6 +16,10 @@ import { api } from "../../services/api"
         email: yup.string().email("Email inválido").required("O email é obrigatório"),
         password: yup.string().required("A senha é obrigatória").min(6,"A senha deve ter mais de 6 dígitos")
     })
+
+    const saveLocalStorage = (values: object)=> {
+        localStorage.setItem(userKey, JSON.stringify(values))
+    }
 
     const formik = useFormik({
         initialValues: {
@@ -26,6 +32,8 @@ import { api } from "../../services/api"
             await api.post("/oapi/login", values)
                 .then((resp)=>{
                     toast.success(resp.data.success)
+                    const {name, email, token} = resp.data
+                    saveLocalStorage({name, email, token})
                     navigate("/home")
                     
                 }).catch((err)=>{

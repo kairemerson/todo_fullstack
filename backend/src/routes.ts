@@ -11,7 +11,7 @@ module.exports = function(server:any){
     const protectedApi = express.Router()
     server.use('/api', protectedApi)
 
-    //protectedApi.use(auth)
+    protectedApi.use(auth)
 
     const createTodo = new CreateTodoController()
     const getTodo = new GetTodoController()

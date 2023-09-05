@@ -19,7 +19,7 @@ export class UserController{
             const AUTHSECRET = process.env.AUTHSECRET || ""
         
             const token = jwt.sign(user, AUTHSECRET,{
-                expiresIn: "1 day"
+                expiresIn: "60s"
             })
             const {name, email} = user
             response.status(200).json({success: "Login efetuado com sucesso.",name, email, token})

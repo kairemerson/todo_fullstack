@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import {useNavigate} from "react-router-dom"
 import 'react-toastify/dist/ReactToastify.css';
+import {toast} from "react-toastify"
 import { api, getList } from "../../services/api"
 import { TodoList } from "./TodoList"
 import { TodoEdit } from "./TodoEdit"
@@ -22,8 +23,13 @@ export const Home = ()=>{
     },[])
     
     const list = async()=>{
-        const todos = await getList()
-        setTodoList(todos.data)
+        try {
+            const todos = await getList()        
+            setTodoList(todos?.data)
+            
+        } catch (error:any) {
+            toast.error(error)
+        }
     }
 
     const validateToken = async ()=> {
@@ -31,19 +37,18 @@ export const Home = ()=>{
             
             await api.post("/oapi/validateToken", {"token": userParse.token})
                 .then((resp)=> {
-                    console.log("valid",resp.data.valid);
                     
                     if(resp.data.valid){
                         api.defaults.headers.common["Authorization"] = userParse.token
                         list()
                     }else{
+                        list()
                         localStorage.removeItem(userKey)
                         navigate("/")
                     }
                 })
             
         } catch (error) {
-            console.log("error",error);
             
         }
     }
@@ -53,7 +58,9 @@ export const Home = ()=>{
         await api.post("/oapi/validateToken", {"token": userParse.token})
             .then(async (resp)=>{
                 if(resp.data.valid){
-                    await api.post("/api/todo",{description: inputValue})
+                    await api.post("/api/todo",{description: inputValue}).then((resp)=>{
+                        toast.success("Todo criado com sucesso")
+                    })
                     setInputValue("")
                     list()
                 }else{
@@ -69,10 +76,13 @@ export const Home = ()=>{
         await api.post("/oapi/validateToken", {"token": userParse.token})
             .then(async (resp)=>{
                 if(resp.data.valid){
-                    await api.delete("/api/todo", { data: {id:id}})
+                    await api.delete("/api/todo", { data: {id:id}}).then((resp)=>{
+                        toast.success("Todo deletado com sucesso")
+                    })
                     setInputValue("")
                     list()
                 }else{
+                    list()
                     localStorage.removeItem(userKey)
                     navigate("/")
                 }

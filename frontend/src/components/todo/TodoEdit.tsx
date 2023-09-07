@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom"
 import { todoT } from "../../types/todoTypes"
 import styles  from "./styles/todoEdit.module.css"
 import { api } from "../../services/api"
+import {toast} from "react-toastify"
 import {userKey} from "../../components/auth/Login"
 
 interface Props {
@@ -28,11 +29,14 @@ export const TodoEdit = (props: Props)=>{
             .then(async (resp)=>{
                 if(resp.data.valid){
                     let {id, isdone} = todo
-                    await api.put("/api/todo", {id,description: inputValue, isdone})
+                    await api.put("/api/todo", {id,description: inputValue, isdone}).then((resp)=>{
+                        toast.success("Todo editado com sucesso")
+                    })
                     list()
                     changeOpen()
 
                 }else{
+                    list()
                     localStorage.removeItem(userKey)
                     navigate("/")
                 }

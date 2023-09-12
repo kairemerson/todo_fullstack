@@ -20,6 +20,7 @@ module.exports = function(server:any){
 
     protectedApi.post("/todo", createTodo.handle)
     protectedApi.get("/todos", getTodo.handle)
+    protectedApi.post("/todos", getTodo.relation)
     protectedApi.put("/todo", updateTodo.handle)
     protectedApi.delete("/todo", deleteTodo.handle)
 

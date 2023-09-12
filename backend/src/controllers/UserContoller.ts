@@ -12,14 +12,15 @@ export class UserController{
             where: {
                 email: email
             }
-        })
+        }) 
+        
         if(!user){
             return response.status(500).json({error: "Usuário não encontrado"})
         }else if(user && bcrypt.compareSync(password, user.password)){
             const AUTHSECRET = process.env.AUTHSECRET || ""
         
             const token = jwt.sign(user, AUTHSECRET,{
-                expiresIn: "60s"
+                expiresIn: "3000s"
             })
             const {name, email} = user
             response.status(200).json({success: "Login efetuado com sucesso.",name, email, token})
@@ -50,7 +51,7 @@ export class UserController{
         const user = await prismaClient.user.findUnique({
             where:{
                 email
-            }
+            } 
         })
         if(user){
             return response.status(400).send({error: "Usuário já cadastrado"})

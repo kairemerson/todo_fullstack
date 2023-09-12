@@ -18,11 +18,13 @@ export const TodoList = (props: Props)=> {
 
     useEffect(()=>{
         setTodoList(list)
+        console.log(list);
+        
     },[list])
 
     return(
         <div className={styles.container}>
-            {todolist.map((todo: todoT)=>(
+            {todolist?.map((todo: todoT)=>(
                 <div className={styles.todo} key={todo.id}>
                     <span>{todo.description}</span> 
                     <div>

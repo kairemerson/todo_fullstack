@@ -25,7 +25,7 @@ export const Home = ()=>{
     const list = async()=>{
         try {
             const todos = await getList()        
-            setTodoList(todos?.data)
+            setTodoList(todos?.data.todos)
             
         } catch (error:any) {
             toast.error(error)
@@ -58,7 +58,7 @@ export const Home = ()=>{
         await api.post("/oapi/validateToken", {"token": userParse.token})
             .then(async (resp)=>{
                 if(resp.data.valid){
-                    await api.post("/api/todo",{description: inputValue}).then((resp)=>{
+                    await api.post("/api/todo",{description: inputValue, authorEmail: userParse.email}).then((resp)=>{
                         toast.success("Todo criado com sucesso")
                     })
                     setInputValue("")

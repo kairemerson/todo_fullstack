@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { todoT } from "../../types/todoTypes"
+import { todoT,ArrayTodo } from "../../types/todoTypes"
 import styles from "./styles/todoList.module.css"
 import {BiEdit} from "react-icons/bi"
 import {FaRegTrashCan} from "react-icons/fa6"
@@ -8,23 +8,23 @@ import {FaRegTrashCan} from "react-icons/fa6"
 interface Props {
     deleteTodo: (id: number)=> void,
     editTodo: (todo: todoT)=> void,
-    list: todoT[]
+    list: ArrayTodo
 }
 
 export const TodoList = (props: Props)=> {
     const {deleteTodo, editTodo, list} = props
 
-    const [todolist, setTodoList] = useState<todoT[]>([]) 
+    const [todolist, setTodoList] = useState<ArrayTodo>() 
 
     useEffect(()=>{
         setTodoList(list)
-        console.log(list);
         
     },[list])
 
     return(
         <div className={styles.container}>
-            {todolist?.map((todo: todoT)=>(
+            {!todolist?.todos.length ? <p>Nenhum dado para exibir!</p> : false}
+            {todolist?.todos.map((todo: todoT)=>(
                 <div className={styles.todo} key={todo.id}>
                     <span>{todo.description}</span> 
                     <div>
@@ -36,4 +36,7 @@ export const TodoList = (props: Props)=> {
             ))}
         </div>
     )
+
+    
+    
 }

@@ -6,14 +6,14 @@ import { api, getList } from "../../services/api"
 import { TodoList } from "./TodoList"
 import { TodoEdit } from "./TodoEdit"
 import styles from "./styles/home.module.css"
-import { todoT } from "../../types/todoTypes"
+import { todoT,ArrayTodo } from "../../types/todoTypes"
 import {userKey} from "../../components/auth/Login"
 
 export const Home = ()=>{
     const [inputValue, setInputValue] = useState('')
     const [open, setOpen] = useState(false)
     const [todoToEdit, setTodoToEdit] = useState<todoT>({id: 0, description: "",isdone: false})
-    const [todoList, setTodoList] = useState<todoT[]>([])
+    const [todoList, setTodoList] = useState<ArrayTodo>()
     const navigate = useNavigate()
     const storage = localStorage.getItem(userKey)|| ""
     const userParse = storage ? JSON.parse(storage) : {token: ""}
@@ -25,7 +25,7 @@ export const Home = ()=>{
     const list = async()=>{
         try {
             const todos = await getList()        
-            setTodoList(todos?.data.todos)
+            setTodoList(todos?.data)
             
         } catch (error:any) {
             toast.error(error)
@@ -103,7 +103,7 @@ export const Home = ()=>{
                 <input className={styles.input} type="text" value={inputValue} onChange={(e)=>setInputValue(e.target.value)}/>
                 <button className={styles.button_add} onClick={handleSubmit}>Adicionar</button>
             </div>
-            {todoList && (<TodoList deleteTodo={deleteTodo} editTodo={editTodo} list={todoList} />)}
+            {todoList && <TodoList deleteTodo={deleteTodo} editTodo={editTodo} list={todoList} />}
             
             {open && (<TodoEdit todo={todoToEdit} changeOpen={changeOpen} list={list}/>)}
         </div>
